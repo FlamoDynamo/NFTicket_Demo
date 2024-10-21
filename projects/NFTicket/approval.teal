@@ -1,0 +1,815 @@
+#pragma version 5
+txn ApplicationID
+int 0
+==
+bnz main_l174
+txn OnCompletion
+int OptIn
+==
+bnz main_l173
+txn NumAppArgs
+int 4
+==
+txna ApplicationArgs 0
+byte "create_event"
+==
+&&
+txn Sender
+global CreatorAddress
+==
+&&
+bnz main_l139
+txn NumAppArgs
+int 2
+==
+txna ApplicationArgs 0
+byte "stop_event"
+==
+&&
+txn Sender
+global CreatorAddress
+==
+&&
+bnz main_l116
+txn NumAppArgs
+int 2
+==
+txna ApplicationArgs 0
+byte "add_attendant"
+==
+&&
+byte "event_count"
+app_global_get
+txna ApplicationArgs 1
+btoi
+>=
+&&
+byte "event_ticket_count_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l115
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l114
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l113
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l112
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l111
+byte ""
+main_l10:
+concat
+app_global_get
+int 0
+>
+&&
+bnz main_l22
+txn OnCompletion
+int NoOp
+==
+bnz main_l21
+txn OnCompletion
+int CloseOut
+==
+bnz main_l20
+txn OnCompletion
+int ClearState
+==
+bnz main_l19
+txn OnCompletion
+int UpdateApplication
+==
+bnz main_l18
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l17
+err
+main_l17:
+int 0
+return
+main_l18:
+int 0
+return
+main_l19:
+int 1
+return
+main_l20:
+int 1
+return
+main_l21:
+int 1
+return
+main_l22:
+byte "Handling add_attendant"
+log
+byte "event_ticket_count_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l110
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l109
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l108
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l107
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l106
+byte ""
+main_l28:
+concat
+app_global_get
+int 0
+>
+assert
+byte "Event has available tickets"
+log
+txn Sender
+global CurrentApplicationID
+byte "event_attendants_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l105
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l104
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l103
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l102
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l101
+byte ""
+main_l34:
+concat
+app_local_get_ex
+store 1
+store 0
+txn Sender
+byte "event_attendants_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l100
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l99
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l98
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l97
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l96
+byte ""
+main_l40:
+concat
+app_local_get
+!
+assert
+byte "Attendant is not already registered"
+log
+txn Sender
+byte "event_attendants_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l95
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l94
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l93
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l92
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l91
+byte ""
+main_l46:
+concat
+int 1
+app_local_put
+byte "Attendant registered"
+log
+byte "event_ticket_count_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l90
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l89
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l88
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l87
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l86
+byte ""
+main_l52:
+concat
+byte "event_ticket_count_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l85
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l84
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l83
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l82
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l81
+byte ""
+main_l58:
+concat
+app_global_get
+int 1
+-
+app_global_put
+byte "Ticket count updated"
+log
+byte "event_ticket_issued_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l80
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l79
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l78
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l77
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l76
+byte ""
+main_l64:
+concat
+byte "event_ticket_issued_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l75
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l74
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l73
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l72
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l71
+byte ""
+main_l70:
+concat
+app_global_get
+int 1
++
+app_global_put
+byte "Ticket issuance updated"
+log
+int 1
+return
+main_l71:
+byte "5"
+b main_l70
+main_l72:
+byte "4"
+b main_l70
+main_l73:
+byte "3"
+b main_l70
+main_l74:
+byte "2"
+b main_l70
+main_l75:
+byte "1"
+b main_l70
+main_l76:
+byte "5"
+b main_l64
+main_l77:
+byte "4"
+b main_l64
+main_l78:
+byte "3"
+b main_l64
+main_l79:
+byte "2"
+b main_l64
+main_l80:
+byte "1"
+b main_l64
+main_l81:
+byte "5"
+b main_l58
+main_l82:
+byte "4"
+b main_l58
+main_l83:
+byte "3"
+b main_l58
+main_l84:
+byte "2"
+b main_l58
+main_l85:
+byte "1"
+b main_l58
+main_l86:
+byte "5"
+b main_l52
+main_l87:
+byte "4"
+b main_l52
+main_l88:
+byte "3"
+b main_l52
+main_l89:
+byte "2"
+b main_l52
+main_l90:
+byte "1"
+b main_l52
+main_l91:
+byte "5"
+b main_l46
+main_l92:
+byte "4"
+b main_l46
+main_l93:
+byte "3"
+b main_l46
+main_l94:
+byte "2"
+b main_l46
+main_l95:
+byte "1"
+b main_l46
+main_l96:
+byte "5"
+b main_l40
+main_l97:
+byte "4"
+b main_l40
+main_l98:
+byte "3"
+b main_l40
+main_l99:
+byte "2"
+b main_l40
+main_l100:
+byte "1"
+b main_l40
+main_l101:
+byte "5"
+b main_l34
+main_l102:
+byte "4"
+b main_l34
+main_l103:
+byte "3"
+b main_l34
+main_l104:
+byte "2"
+b main_l34
+main_l105:
+byte "1"
+b main_l34
+main_l106:
+byte "5"
+b main_l28
+main_l107:
+byte "4"
+b main_l28
+main_l108:
+byte "3"
+b main_l28
+main_l109:
+byte "2"
+b main_l28
+main_l110:
+byte "1"
+b main_l28
+main_l111:
+byte "5"
+b main_l10
+main_l112:
+byte "4"
+b main_l10
+main_l113:
+byte "3"
+b main_l10
+main_l114:
+byte "2"
+b main_l10
+main_l115:
+byte "1"
+b main_l10
+main_l116:
+byte "Handling stop_event"
+log
+txna ApplicationArgs 1
+btoi
+byte "event_count"
+app_global_get
+<=
+assert
+byte "Event ID is valid"
+log
+global LatestTimestamp
+byte "event_end_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l138
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l137
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l136
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l135
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l134
+byte ""
+main_l122:
+concat
+app_global_get
+>=
+assert
+byte "Event has ended"
+log
+byte "event_stopped_"
+txna ApplicationArgs 1
+btoi
+int 1
+==
+bnz main_l133
+txna ApplicationArgs 1
+btoi
+int 2
+==
+bnz main_l132
+txna ApplicationArgs 1
+btoi
+int 3
+==
+bnz main_l131
+txna ApplicationArgs 1
+btoi
+int 4
+==
+bnz main_l130
+txna ApplicationArgs 1
+btoi
+int 5
+==
+bnz main_l129
+byte ""
+main_l128:
+concat
+int 1
+app_global_put
+byte "Event stopped"
+log
+int 1
+return
+main_l129:
+byte "5"
+b main_l128
+main_l130:
+byte "4"
+b main_l128
+main_l131:
+byte "3"
+b main_l128
+main_l132:
+byte "2"
+b main_l128
+main_l133:
+byte "1"
+b main_l128
+main_l134:
+byte "5"
+b main_l122
+main_l135:
+byte "4"
+b main_l122
+main_l136:
+byte "3"
+b main_l122
+main_l137:
+byte "2"
+b main_l122
+main_l138:
+byte "1"
+b main_l122
+main_l139:
+byte "Handling create_event"
+log
+byte "event_count"
+app_global_get
+int 5
+<
+assert
+byte "Event count is within limit"
+log
+byte "event_count"
+byte "event_count"
+app_global_get
+int 1
++
+app_global_put
+byte "New event count: "
+byte "event_count"
+app_global_get
+itob
+concat
+log
+byte "event_"
+byte "event_count"
+app_global_get
+int 1
+==
+bnz main_l172
+byte "event_count"
+app_global_get
+int 2
+==
+bnz main_l171
+byte "event_count"
+app_global_get
+int 3
+==
+bnz main_l170
+byte "event_count"
+app_global_get
+int 4
+==
+bnz main_l169
+byte "event_count"
+app_global_get
+int 5
+==
+bnz main_l168
+byte ""
+main_l145:
+concat
+byte "_nft_id"
+concat
+txna ApplicationArgs 1
+btoi
+app_global_put
+byte "Stored nft_id"
+log
+byte "event_end_"
+byte "event_count"
+app_global_get
+int 1
+==
+bnz main_l167
+byte "event_count"
+app_global_get
+int 2
+==
+bnz main_l166
+byte "event_count"
+app_global_get
+int 3
+==
+bnz main_l165
+byte "event_count"
+app_global_get
+int 4
+==
+bnz main_l164
+byte "event_count"
+app_global_get
+int 5
+==
+bnz main_l163
+byte ""
+main_l151:
+concat
+txna ApplicationArgs 2
+btoi
+app_global_put
+byte "Stored end_timestamp"
+log
+byte "event_ticket_count_"
+byte "event_count"
+app_global_get
+int 1
+==
+bnz main_l162
+byte "event_count"
+app_global_get
+int 2
+==
+bnz main_l161
+byte "event_count"
+app_global_get
+int 3
+==
+bnz main_l160
+byte "event_count"
+app_global_get
+int 4
+==
+bnz main_l159
+byte "event_count"
+app_global_get
+int 5
+==
+bnz main_l158
+byte ""
+main_l157:
+concat
+txna ApplicationArgs 3
+btoi
+app_global_put
+byte "Stored ticket count"
+log
+int 1
+return
+main_l158:
+byte "5"
+b main_l157
+main_l159:
+byte "4"
+b main_l157
+main_l160:
+byte "3"
+b main_l157
+main_l161:
+byte "2"
+b main_l157
+main_l162:
+byte "1"
+b main_l157
+main_l163:
+byte "5"
+b main_l151
+main_l164:
+byte "4"
+b main_l151
+main_l165:
+byte "3"
+b main_l151
+main_l166:
+byte "2"
+b main_l151
+main_l167:
+byte "1"
+b main_l151
+main_l168:
+byte "5"
+b main_l145
+main_l169:
+byte "4"
+b main_l145
+main_l170:
+byte "3"
+b main_l145
+main_l171:
+byte "2"
+b main_l145
+main_l172:
+byte "1"
+b main_l145
+main_l173:
+int 1
+return
+main_l174:
+byte "event_count"
+int 0
+app_global_put
+int 1
+return
